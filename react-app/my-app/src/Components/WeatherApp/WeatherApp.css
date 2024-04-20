@@ -1,0 +1,143 @@
+body{
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: top;
+    justify-content: center;
+    background-color: #626262;
+    background-repeat: no-repeat;
+    background-size: 250vh;
+    background-image: url("https://images.pexels.com/photos/281260/pexels-photo-281260.jpeg?auto=compress&cs=tinysrgb&w=600");
+}
+.container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    /* background: radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%); */
+    padding: 24px 32px;
+    overflow: hidden;
+    border-radius: 18px;
+    font-family: 'Roboto' , sans-serif;
+    transition: 0.6s ease-out;
+}
+.top-bar{ /* Where the search bar is */
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    padding-top: 60px;
+}
+.top-bar input{
+    display: flex;
+    width: 362px;
+    height: 78px;
+    background: #ebfffc;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    padding-left: 40px;
+    color: #626262;
+    font-size: 20px;
+    font-weight: 400px;
+    text-transform: uppercase;
+
+}
+.search-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 78px;
+    height: 78px;
+    background: #ebfffc;
+    border-radius: 40px;
+    cursor: pointer;
+    border: 3px solid white;
+    transition: transform 0.3s ease 0s;
+}
+.search-icon:hover
+{
+    transform: translateY(-20px);
+    background-color: var(--clr-red);
+    color: var(--clr-light);
+}
+.weather-image{
+    margin-top: 29px;
+    display: flex;
+    justify-content: center;
+    transition: transform 0.3s ease 0s;
+}
+.weather-image:hover{
+    transform: translateY(-30px);
+}
+.weather-temp{
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 120px;
+    font-weight: 400;
+}
+
+.weather-location:hover {
+    transform: translateY(20px);
+}
+
+.weather-location{
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 60px;
+    font-weight: 400;
+    transition: transform 0.3s ease 0s;
+}
+.data-container{
+    margin-top: 50px;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+.element{
+    margin: auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+.data{
+    font-size: 34px;
+    font-weight: 400;
+}
+.text{
+    font-size: 20px;
+    font-weight: 400;
+}
+.icon{
+    margin-top: 10px;
+    width: 55px;
+    height: 55px;
+    color: #ebfffc;
+}
+.dropdown-row{
+    cursor: pointer;
+    text-align: start;
+    margin: 2px 0;
+}
+.dropdown{
+    background-color: #ebfffc;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+}
+.fade-in{
+    animation: 0.5s fadeIn forwards;
+    animation-delay: 0.5s;
+}
+
+@keyframes fadeIn {
+to{
+    scale: 1;
+    opacity: 1;
+
+}    
+}
