@@ -14,13 +14,16 @@ import wind_icon from "../Assets/wind.png";
 import feels_icon from "../Assets/feelslike.png";
 import brokencloud_icon from "../Assets/broken_cloud.png";
 import sunset_icon from "../Assets/sunset.png";
+import Light_Background from "../Assets/Light_Background.png";
+import Dark_Background from "../Assets/Dark_Background.png";
+import moon_icon from "../Assets/Moon.png";
+import Night_cloudy_icon from "../Assets/Night_cloudy.png";
 
 // function 
 export const WeatherApp = () => { 
-    
-    //New edit here 4/20/2024
 
    let [W_state, set_Wstate] = useState(cloud_icon);
+   let [backgroundImage, setBackgroundImage] = useState('');
    let api_key = "0d42b7461f37f75e6433c1cbe39ad3bf";
    /*Zipcode and country code regex*/
    let zip_regex = "([0-9]{5},\s*[a-zA-Z]{2})|^([0-9]{5}$)";
@@ -119,13 +122,21 @@ try {
        sunset[0].innerHTML = sunsetTime(timezone,epoch);
 
 
-       if(data.weather[0].icon === "01d" || data.weather[0].icon === "01n")
+       if(data.weather[0].icon === "01d")
        {
         set_Wstate(clear_icon);
        }
-       else if(data.weather[0].icon === "02d" || data.weather[0].icon === "02n")
+       else if(data.weather[0].icon === "01n")
+       {
+        set_Wstate(moon_icon);
+       }
+       else if(data.weather[0].icon === "02d")
        {
         set_Wstate(sunnycloudy_icon);
+       }
+       else if(data.weather[0].icon === "02n")
+       {
+        set_Wstate(Night_cloudy_icon);
        }
        else if(data.weather[0].icon === "03d" || data.weather[0].icon === "03n")
        {
@@ -151,6 +162,34 @@ try {
        {
         set_Wstate(clear_icon);
        }
+       /*Calculates the local time at the desired location*/
+       const currentTimeInMilitaryFormat = (timezoneOffset) => {
+        const currentDate = new Date();
+        const currentTime = currentDate.getTime(); 
+        const offsetInMilliseconds = timezoneOffset * 1000;
+    
+        const timeInSpecifiedTimezone = new Date(currentTime + offsetInMilliseconds);
+    
+        const hours = timeInSpecifiedTimezone.getUTCHours();
+        const minutes = timeInSpecifiedTimezone.getUTCMinutes();
+        const seconds = timeInSpecifiedTimezone.getUTCSeconds();
+    
+        const formattedHours = hours.toString().padStart(2, '0');
+    
+        return `${formattedHours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    };
+       /*Changes the background based on the time of day at desired location*/
+       const choose_background = () => {
+        let currentTime = currentTimeInMilitaryFormat(timezone).slice(0,2);
+
+        if (currentTime >= 6 && currentTime < 18) {
+            setBackgroundImage(`url(${Light_Background})`);
+        } 
+        else {
+            setBackgroundImage(`url(${Dark_Background})`);
+        }
+       }
+       choose_background();
     }
     catch(error){
         alert("Please enter a valid location");
@@ -163,10 +202,12 @@ try {
 
     
    <div className = 'body' style = {{
-    backgroundImage: "url('https://images.pexels.com/photos/281260/pexels-photo-281260.jpeg?auto=compress&cs=tinysrgb&w=600')",
+    backgroundImage: backgroundImage,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    width: '100vw',
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100vw' ,
     height: '100vh'
    }}>
 
