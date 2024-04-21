@@ -23,7 +23,7 @@ import Night_cloudy_icon from "../Assets/Night_cloudy.png";
 export const WeatherApp = () => { 
 
    let [W_state, set_Wstate] = useState(cloud_icon);
-   let [backgroundImage, setBackgroundImage] = useState('');
+   let [backgroundImage, setBackgroundImage] = useState(`url(${Light_Background})`);
    let api_key = "0d42b7461f37f75e6433c1cbe39ad3bf";
    /*Zipcode and country code regex*/
    let zip_regex = "([0-9]{5},\s*[a-zA-Z]{2})|^([0-9]{5}$)";
@@ -69,6 +69,9 @@ export const WeatherApp = () => {
        let url = ``;
        let zipcountry = inputvalue.match(zip_regex);
        let country = cityvalue.match(count_regex);
+       let sunset_time;
+       let formatted_time;
+       
 try {
        if(inputvalue === "")
        {
@@ -116,11 +119,11 @@ try {
         const seconds = adjustedSunsetDate.getUTCSeconds();
 
         const formattedSunsetTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        return formattedSunsetTime;
+        sunset_time = formattedSunsetTime;
        }
+       sunsetTime(epoch,timezone);
 
-       sunset[0].innerHTML = sunsetTime(timezone,epoch);
-
+       sunset[0].innerHTML = sunset_time;
 
        if(data.weather[0].icon === "01d")
        {
@@ -142,7 +145,7 @@ try {
        {
         set_Wstate(cloud_icon);
        }
-       else if(data.weather[0].icon === "04d" || data.weather.icon[0] === "04n")
+       else if(data.weather[0].icon === "04d" || data.weather[0].icon === "04n")
        {
         set_Wstate(brokencloud_icon);
        }
@@ -162,6 +165,8 @@ try {
        {
         set_Wstate(clear_icon);
        }
+
+
        /*Calculates the local time at the desired location*/
        const currentTimeInMilitaryFormat = (timezoneOffset) => {
         const currentDate = new Date();
@@ -176,11 +181,12 @@ try {
     
         const formattedHours = hours.toString().padStart(2, '0');
     
-        return `${formattedHours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        formatted_time = `${formattedHours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     };
+        currentTimeInMilitaryFormat(timezone);
        /*Changes the background based on the time of day at desired location*/
        const choose_background = () => {
-        let currentTime = currentTimeInMilitaryFormat(timezone).slice(0,2);
+        let currentTime = formatted_time.slice(0,2);
 
         if (currentTime >= 6 && currentTime < 18) {
             setBackgroundImage(`url(${Light_Background})`);
@@ -192,7 +198,7 @@ try {
        choose_background();
     }
     catch(error){
-        alert("Please enter a valid location");
+       alert("Please enter a valid location");
     }
    }      
 
