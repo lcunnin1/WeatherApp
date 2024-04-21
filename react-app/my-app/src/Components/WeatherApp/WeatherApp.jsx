@@ -102,6 +102,8 @@ try {
 
        let timezone = data.timezone;
        let epoch = data.sys.sunset;
+
+       /*Function that handles conversion of the epoch to the hour of the day*/
        const sunsetTime = (sunsetTimestamp,timezoneOffset) => {
 
         const sunsetDate = new Date(sunsetTimestamp * 1000);
@@ -114,17 +116,8 @@ try {
         return formattedSunsetTime;
        }
 
-
        sunset[0].innerHTML = sunsetTime(timezone,epoch);
 
-
-       /*
-       Get date in UTC time
-       Filter hour and minute
-       */
-       let sunset_date = data.sys.sunset;
-       let current_str = new Date().getTime().toString();
-       current_str = current_str.substring(0,8);
 
        if(data.weather[0].icon === "01d" || data.weather[0].icon === "01n")
        {
@@ -166,13 +159,15 @@ try {
 
  return (
     
-//Start of HTML code 
+//Start of CSS code 
 
     
-   <div className = 'container' style = {{
+   <div className = 'body' style = {{
     backgroundImage: "url('https://images.pexels.com/photos/281260/pexels-photo-281260.jpeg?auto=compress&cs=tinysrgb&w=600')",
     backgroundRepeat: 'no-repeat',
-    backgroundSize: '250vh'
+    backgroundSize: 'cover',
+    width: '100vw',
+    height: '100vh'
    }}>
 
        <div className="top-bar">

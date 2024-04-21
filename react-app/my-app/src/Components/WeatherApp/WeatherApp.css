@@ -9,12 +9,11 @@ body{
     justify-content: center;
     background-color: #626262;
     background-repeat: no-repeat;
-    background-size: 250vh;
-    background-image: url("https://images.pexels.com/photos/281260/pexels-photo-281260.jpeg?auto=compress&cs=tinysrgb&w=600");
 }
 .top-bar{ /* Where the search bar is */
     display: flex;
-    justify-content: left;
+    justify-content: center;
+    padding-left: 30px;
     gap: 14px;
     padding-top: 60px;
 }
