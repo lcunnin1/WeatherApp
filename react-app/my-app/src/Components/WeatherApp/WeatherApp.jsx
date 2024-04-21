@@ -12,7 +12,8 @@ import rain_icon from "../Assets/rain.png";
 import snow_icon from "../Assets/snow.png";
 import wind_icon from "../Assets/wind.png";
 import feels_icon from "../Assets/feelslike.png";
-import brokencloud_icon from "../Assets/broken_cloud.png"
+import brokencloud_icon from "../Assets/broken_cloud.png";
+import sunset_icon from "../Assets/sunset.png";
 
 // function 
 export const WeatherApp = () => { 
@@ -91,13 +92,31 @@ try {
        const temperature = document.getElementsByClassName("weather-temp");
        const location = document.getElementsByClassName("weather-location");
        const feelslike = document.getElementsByClassName("feels-like");
-       const sunset = document.getElementsByClassName("sunset");
+       const sunset = document.getElementsByClassName("sunset-time");
     
        humidity[0].innerHTML = data.main.humidity + "%" ;
        wind[0].innerHTML = data.wind.speed + "mph";
        temperature[0].innerHTML = Math.floor(data.main.temp) + "°F";
        location[0].innerHTML = data.name;
-       feelslike[0].innerHTML = Math.floor(data.main.feels_like) + "°F";   
+       feelslike[0].innerHTML = Math.floor(data.main.feels_like) + "°F";
+
+       let timezone = data.timezone;
+       let epoch = data.sys.sunset;
+       const sunsetTime = (sunsetTimestamp,timezoneOffset) => {
+
+        const sunsetDate = new Date(sunsetTimestamp * 1000);
+        const adjustedSunsetDate = new Date(sunsetDate.getTime() + timezoneOffset * 1000);
+        const hours = adjustedSunsetDate.getUTCHours()-12;
+        const minutes = adjustedSunsetDate.getUTCMinutes();
+        const seconds = adjustedSunsetDate.getUTCSeconds();
+
+        const formattedSunsetTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        return formattedSunsetTime;
+       }
+
+
+       sunset[0].innerHTML = sunsetTime(timezone,epoch);
+
 
        /*
        Get date in UTC time
@@ -193,6 +212,15 @@ try {
                    <div className="text">Feels Like</div>
                </div>
            </div>
+
+           <div className="element">
+               <img src={sunset_icon} alt="" className="icon" />
+               <div className="data">
+                   <div className="sunset-time">8:00 pm</div>
+                   <div className="text">Sunset Time</div>
+               </div>
+           </div>
+
        </div>
    </div>
 
